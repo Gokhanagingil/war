@@ -1,64 +1,84 @@
-# Kale Muhafızları
+# Kale Muhafızları · V2
 
-Türkçe, özgün, tek oyunculu ve mobil uyumlu sıra tabanlı kale düellosu. APK, hesap, ödeme, derleme veya üçüncü taraf paket gerektirmez. SVG kahramanlar, kaleler ve çevre çizimleri bu demo için hazırlanmıştır. Başka oyunlara ait görsel veya ses varlığı kullanılmaz.
+Türkçe, özgün, mobil uyumlu, tek oyunculu sıra tabanlı kale düellosu. Bu ikinci prototip, savaş alanını terk etmeden hamle kurma ve birkaç karar sonrasını düşünme üzerine tasarlanmıştır. APK, hesap, ödeme, harici oyun varlığı veya derleme gerekmez.
 
 ## Çalıştırma
-
-Python 3 varsa:
 
 ```sh
 cd war
 python3 -m http.server 4173 --directory dist
 ```
 
-Tarayıcıda `http://localhost:4173` adresini açın. Alternatif olarak `npm start` aynı komutu çalıştırır. ES modülleri nedeniyle dosyaya çift tıklayarak `file://` açmak yerine bir statik sunucu kullanın. Kurulum veya `npm install` gerekmez.
+Tarayıcıda `http://localhost:4173` adresini açın. `npm start` aynı komutu çalıştırır. ES modülleri nedeniyle dosyaya çift tıklayıp `file://` ile açmak yerine statik sunucu kullanın. `npm install` gerekmez.
 
-`dist/` içindeki beş dosya herhangi bir statik hostta doğrudan sunulabilir. Çalışma sırasında uzak API, font, görsel veya analiz servisi çağrısı yapılmaz. Yerel statik sunucudan internet bağlantısı olmadan oynanabilir. Bu sürüm çevrimdışı web uygulaması kurulumu veya service worker içermez.
+`dist/` herhangi bir statik hostta sunulabilir. Uzak API, font, görsel, analiz veya hesap bağımlılığı yoktur. Yerel statik sunucudan internet olmadan oynanabilir. Service worker veya çevrimdışı uygulama kurulumu içermez.
 
-## Oynanış ve kontroller
+## Tek ekranlık kontroller
 
-- Fare/touch: Bir kahraman ve rakip kale seçin, büyük hamle düğmesine basın.
-- Klavye: Tab / Shift+Tab ile gezin, Enter veya Space ile düğmeleri kullanın. Escape, açık bilgi/ayar/talim penceresini kapatır.
-- Rakibin bir yan kulesi yıkılınca ana kale açılır. Rakibin ana kalesini yıkınca kazanırsınız; kendi ana kaleniz yıkılınca kaybedersiniz.
-- Her tarafın iki yan kulesi 240, ana kalesi 420 candır. Can, kahramanlara değil kalelere aittir.
-- Kora taş, İlda ok, Neris ses türündedir. Her kahraman istediğiniz dost kaleyi savunabilir. Tür eşleşmesi güçlü koruma sağlar; eşleşmeyen özel savunma başarısız olur, 0 hasar engeller ve yine beklemeye girer. Yalnızca evrensel kalkan her saldırı türüne karşı 12 hasar engeller.
-- Sıra: oyuncu saldırır, rakip savunur, rakip saldırır, oyuncu savunur. Bir tam tur her iki saldırıyı içerir.
-- Özel saldırı ve savunma ayrı bekler; aynı özel yeteneği yeniden kullanmadan önce bir tur geçmelidir. Temel Atış (28 hasar) ve genel kalkan (12 engelleme) her zaman kullanılabilir. Temel Atış aktif bir kahraman tarafından gerçekleştirilir ve özel saldırı süresini sıfırlamaz.
-- Yan kalesi yıkılan kahraman, o turun kalanı ve sonraki tam tur için ana kaleye çekilir, sonra geri döner.
-- “Rakibi incele” rakip kahramanların açık bekleme sürelerini ve konumlarını gösterir. AI yalnızca açık durumu kullanır; gizli oyuncu kararını okumaz.
+- Kendi kalene dokunarak oradaki kahramanı seç.
+- Hamle tepsisinden Hızlı, Ağır, Boz veya Hazırlan seç.
+- Vuruş için rakip kaleyi savaş alanında seç ve hamleyi onayla. Hazırlan hedef istemez.
+- Savunmada gelen kahraman, saldırı türü, hedef kale ve ham hasar sahada kalır. Siper seçerken kesin hasar/can/enerji sonucu tepside görünür.
+- Aynı ana kalede birden fazla muhafız varsa kaleye tekrar dokunarak aralarında geçiş yap.
+- Ücretsiz “Temel 18” düğmesi tepsinin sağ üstündedir; özel eylem kullanılamasa da oyun kilitlenmez.
+- Tab / Shift+Tab ile gezin, Enter veya Space ile düğme kullanın. Escape açık pencereyi kapatır.
 
-## Talim, kayıt ve ayarlar
+Normal düello ekranı `100dvh` içinde savaş alanı ve sabit hamle tepsisine ayrılır. Yardım, ayarlar, hikâyeler, günce ve talim ayrı kaydırılabilir pencerelerdir. Atış, kalkan ve darbe animasyonları savaş alanında gösterilir; sistemin azaltılmış hareket tercihi desteklenir. Ses varsayılan kapalıdır ve kullanıcı açarsa Web Audio ile yerel üretilir.
 
-Kora’nın talim alanında hareketli işaretçiyi altın bölgenin ortasında üç kez durdurun. Merkezden uzaklığa göre 0–3 yıldız kazanılır. En iyi derece saklanır; her yıldız Kora’ya +3 saldırı ve +3 eşleşen savunma, en fazla +9/+9 verir. Eğitim bonusu yalnızca yeni düelloda uygulanır. Ayarlardan bonusu açıp kapatın ve yeni düello başlatarak taban değerlerle karşılaştırın. Demo para veya hesap kullanmaz.
+## Küçük kurallar, ortak maliyetler
 
-Tek `localStorage` anahtarı `kale-muhafizlari-v1`, düelloyu, talim derecesini ve ses ayarını tutar. Yenileme, AI ara aşamaları dahil aynı seri durumdan devam eder. Geçersiz/eski kayıt yeni düelloya döner. Kayıt alanı kullanılamazsa oyun açık sekmede çalışır ve uyarı gösterir. Ayarlardaki “ilerlemeyi temizle” yalnızca bu oyunun kaydını sıfırlar; açık bir onay ekranı vardır.
+Her tarafın iki yan kulesi 240, ana kalesi 420 candır. Ana kaleyi hedeflemek için en az bir yan kuleyi yıkmak gerekir. Can kahramanlarda değil, kalelerdedir. Kora solda taş, İlda sağda ok, Neris ana kalede ses türünü kullanır. Yan kale yıkılınca kahramanı o turun kalanı ve sonraki tam tur için ana kaleye çekilir; sonra geri döner.
 
-Ses varsayılan olarak kapalıdır. Kullanıcı açtığında Web Audio ile kısa, yerel sesler üretilir. Sistem `prefers-reduced-motion` tercihi hareketleri azaltır. Hareketli talim göstergesi, zamanlama mini oyununun gerekli görsel girdisidir.
+### Enerji
 
-## Kaynak yapısı
+Her tarafın kendi 6 kapasiteli enerji havuzu vardır. Saldırı ve savunma bu aynı havuzdan harcar. İlk hamleyi yapan 3, ikinci oynayan 4 enerjiyle başlar. Bu açık başlangıç telafisi ilk hamle avantajını azaltmak içindir; tam denge garantisi değildir. İlk saldırıdan sonraki her kendi saldırı başlangıcında +3 yenilenir; savunma öncesi ayrıca yenilenmez. Her iki taraf da aynı kurala uyar. İlk düelloda başlangıç sırası seed üzerinden kura ile belirlenir. Sonraki yeni düellolarda sıra dönüşümlüdür; mevcut düellonun ilk tarafı kayıtta tutulur, sayfa yenileme sırayı gizlice sıfırlamaz.
 
-- `dist/engine.js`: Saf, değişmez, seed ile deterministik oyun kuralları. DOM, ağ ve saat bağımlılığı yoktur.
-- `dist/app.js`: Arayüz, hamle sırası, iptal edilebilir animasyon zamanlayıcıları, talim, ses ve yerel kayıt.
-- `dist/art.js`: Özgün inline SVG resimler ve simgeler.
-- `dist/styles.css`: Duyarlı masaüstü/telefon düzeni ve azaltılmış hareket tercihi.
-- `dist/index.html`: Türkçe, semantik uygulama girişi.
-- `tests/`: Motor testleri ve tekrarlanabilir denge araştırma betiği.
-- `README-engine.md`: API, sayısal kurallar, seed tekrarları, test kapsamı ve denge sonuçları.
+| Eylem | Enerji | Sonuç |
+| --- | ---: | --- |
+| Hızlı | 1 | Kahramanın temel saldırısı: Kora 50 / İlda 42 / Neris 46 |
+| Ağır | 4 | Temel saldırıya +26; savunma için daha az enerji bırakır |
+| Boz | 2 | Temel saldırıdan 16 az; gerçekten can azaltırsa hedef kaledeki hazırlığı siler ve rakipten en fazla 1 enerji alır |
+| Hazırlan | 0 | O saldırıdan vazgeç; +2 enerji (kapasiteyi aşmaz), seçilen kahramana bir kullanımlık +18 hazırlık |
+| Temel atış | 0 | 18 hasar; aktif kahraman yapar, yormaz, hazırlığı tüketmez |
+| Eşleşen özel siper | 2 | Kora 34 / İlda 30 / Neris 32 engeller; kendi kalesinde +8, hazırlığı varsa ayrıca +18 |
+| Evrensel siper | 0 | Her saldırı türüne karşı 12 engeller; kahraman yormaz |
 
-Motorun arayüzden ayrılması, daha sonra sunucu-otoriter çok oyunculu protokol kurmayı kolaylaştırır. Bu demo çevrimiçi eşleştirme, hesap, sunucu otoritesi veya hile koruması içermez.
+Yanlış türde özel siper 0 engeller; 2 enerji ve yorgunluk yine harcanır. Bozma tamamen engellenirse enerji veya hazırlık silinmez. Savunma önizlemesi bozma yüzünden kaybolacak enerjiyi de içerir; takip eden saldırı başlangıcındaki yenilenme ayrı gerçekleşir.
 
-## Testler
+### Kahramanın da bir kaynaktır
+
+Özel saldırı yapan kahraman hemen sonraki kendi savunma kararında dinlenir. Özel siper kullanan kahraman hemen sonraki kendi saldırı kararında dinlenir. Enerji yeterli olsa da aynı kahramanı arka arkaya iki rolde kullanamazsın. Diğer hazır kahramanlar her dost kaleyi koruyabilir; yerel savunma +8 daha güçlüdür.
+
+Hazırlık birikmez: kahramanda en fazla bir +18 yük vardır. Sonraki özel saldırıda veya eşleşen siperde tüketilir. Hazırlan saldırı fırsatını feda eder, kahramanı yormaz. Rakip bozucu darbe ile hazırlığı silebilir. Bunlar kalıcı eğitimden ayrıdır.
+
+## Talim ve kalıcı gelişim
+
+Kora’nın talim alanında hareketli işaretçiyi altın merkeze yakın durdurarak üç atış yapın. En iyi 0–3 yıldız derecesi saklanır. Her derece Kora’nın özel saldırılarına kalıcı +1, en fazla+3 verir; hızlı vuruş 50→53 olur. Özel savunma veya enerji bonusu vermez. Yeni düelloda uygulanır ve ayarlardan kapatılabilir. V1’den gelen talim derecesi korunur, ancak daha küçük V2 sayıları açıkça gösterilir.
+
+## Kaydetme ve sıfırlama
+
+`kale-muhafizlari-v2` localStorage anahtarı düelloyu, talim derecesini ve ses tercihini tutar. Yenileme ara AI aşamaları dahil aynı seri durumdan devam eder. Geçersiz kayıt yeni düelloya döner. V1 savaşları yeni kurallarla uyumsuz olduğundan yeni savaş açılır; talim derecesi taşınır. İlerlemeyi temizleme yalnız bu oyunun V1/V2 anahtarlarını siler ve ayrı onay ister. Kayıt alanı engellenirse oyun açık sekmede sürer, uyarı gösterilir.
+
+## Kaynak ve testler
+
+- `dist/engine.js`: Değişmez, seed ile deterministik, DOM/ağ/saat bağımsız savaş motoru.
+- `dist/app.js`: Ekran, adım adım seçim, iptal edilebilir animasyonlar, kayıt, talim, ses.
+- `dist/art.js`: Bu demo için hazırlanmış özgün inline SVG çizimler.
+- `dist/styles.css`: Tek ekranlık masaüstü/telefon düzeni.
+- `tests/engine.test.mjs`: Kurallar, geçersiz hamleler, iki ilk-hamle yönü, kayıt ve simülasyon testleri.
+- `tests/ui-logic.test.mjs`: Sentetik DOM ile 22 arayüz mantık kontrolü; gerçek görsel/touch testi değildir.
+- `tests/balance.mjs`: Tekrarlanabilir politika karşılaştırmaları.
+- `README-engine.md`: Motor API’si, tam test kapsamı ve güncel denge ölçümleri.
 
 ```sh
-node --test tests/engine.test.mjs
-node tests/balance.mjs 1000
-# veya: npm test
+npm test
+node tests/balance.mjs
 ```
 
-17 motor testi geçmektedir: simetri, hedef kilidi, aşamalar, değişmezlik, geçersiz/yinelenen hamleler, ayrı bekleme süreleri, savunma eşleşmesi, her kaleye savunma, iki tarafın geri çekilmesi, temel eylemler, bonus sınırları, iki tarafın kazanması, seed/JSON yeniden oynatma ve 200 tam maçın durum sınırları. 5.000 seed/politika denge koşusu tur sınırına takılmadan tamamlanmıştır. Bağımsız kural testleri de yanlış tür savunmasının 0 engellemesini doğrulamıştır. Bunlar insan kazanma oranı veya cihaz üzerindeki görsel testin yerine geçmez.
+Yerel HTTP ve JS sözdizimi kontrolleri yapılabilir. Bu çalışma ortamında Chromium, IPC socket kısıtı nedeniyle başlatılamadı; gerçek görsel tarayıcı kontrolü canlı yayın üzerinden yapılmalıdır. Gerçek iOS/Android cihaz doğrulaması ayrıca gerekir.
 
-Yerel HTTP yanıtı ve bütün JS dosyalarının sözdizimi doğrulandı. Canlı yayın ortamındaki tarayıcıda tam bir saldırı/savunma turu, üç atışlık talimden +3 bonus kazanılması, bonusla yeni düelloda Kora saldırısının 83 olması ve 393 CSS piksel genişlikte yatay taşma bulunmaması kontrol edildi. Gerçek iOS cihaz testi yapılmadı. Ayrıca 13 arayüz-çalışma zamanı testi yinelenen tıklamaları, yeniden başlatma/iptal zamanlayıcılarını, talim sonucu yarışını, ayarları ve kayıt yenilemesini doğrular; bunlar görsel tarayıcı testinin yerine geçmez.
+## Denge durumu
 
-## Denge özeti
+Denge geçicidir ve amaç temel oynanışın eğlencesini değerlendirmektir. V1’deki sürekli en güçlü saldırı döngüsü için V2’de enerji ve kahraman yorgunluğu birlikte harcanır; Ağır maliyeti 4 olduğu için tur başı +3 gelirle kesintisiz sürdürülemez. Önceki eşit 4/4 enerji başlangıcındaki 60 maçlık (30 seed × iki ilk-hamle yönü) karşılaştırmada en güçlü saldırı betiği rezerv gözeten betiğe 14, hazırlık/bozma kullanan betiğe 15, gerçek AI’a 13 maç kazanabildi. Bunlar insan kazanma oranı veya stratejinin tümüyle çözüldüğü iddiası değildir. Son 3/4 başlangıç telafisinin küçük eşleşmiş örneğinde (10 seed × iki yön = 20 maç), ilk başlayan taban ve eşit eğitimli grupların her birinde 15/20 kazandı; belirgin avantaj hâlâ vardır. Bu nedenle rövanşlar başlangıç sırasını değiştirir. Son eğitimli/eşit eğitimli ve politika karşılaştırmaları `README-engine.md` içindedir.
 
-Kora 80, İlda 64, Neris 72 hasar; eşleşen savunmaları sırasıyla 50, 42, 46 engellemedir. Taban değerler simetriktir. 200 sabit tohumda en yüksek hasarı ve anlık en iyi engellemeyi seçen basit betik 145 oyuncu / 55 AI galibiyeti ve ortalama 24,7 tur üretti. Eşleşmeyen özel savunmayı boşa harcamamak anlamlı bir stratejidir. Maksimum talim Kora’nın saldırısını %11,25 artırır. 1.000 seed’li iyi hamle seçen betik, bonus kapalıyken 734, +3/+9 bonusla 1.000 maç kazanmıştır. Demo bu politikada oyuncu lehinedir; salt genel kalkan betiği ise 1.000 maçın tamamını kaybetmiştir. Bilinen sınırlama: eğitim bonusuyla basit tekrar eden iyi taktik hâlâ baskındır; ezberlenebilir strateji sorunu çözülmüş değildir. Denge geçicidir ve bu prototip temel oynanışın eğlencesini değerlendirmek içindir. Bu sonuçlar insan kazanma oranı değildir. Ayrıntılı ve tekrar üretilebilir sonuçlar `README-engine.md` içindedir.
+AI yalnız açık kale canı, enerji, hazırlık ve kahraman durumunu kullanır; aynı saf kurallarla hamle yapar. Saldırının ardından savunmayı ve rakibin dönüş saldırısını sınırlı derinlikte değerlendirir. Gizli hasar, ek enerji veya gelecek kullanıcı girdisini görme avantajı yoktur. Çevrimiçi eşleştirme, sunucu otoritesi ve hile koruması bu prototipte yoktur.
