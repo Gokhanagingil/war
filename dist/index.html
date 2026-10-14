@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#171d2d"><meta name="description" content="Üç kahraman, üç kale ve tek bir krallık. Kale Muhafızları özgün sıra tabanlı taktik oyununu tarayıcında oyna."><title>Kale Muhafızları · Krallığını koru</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23171d2d'/%3E%3Cpath d='M14 15h9v9h9v-9h9v9h9v27H14z' fill='%23e4be79'/%3E%3Cpath d='M27 51V38a6 6 0 0 1 12 0v13' fill='%23171d2d'/%3E%3C/svg%3E"><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="site-shell">
+<header class="topbar"><a class="brand" href="./" aria-label="Kale Muhafızları ana sayfa"><span class="brand-mark" aria-hidden="true">♜</span><span>Kale Muhafızları<small>ÜÇ KALE. TEK KRALLIK.</small></span></a><div class="top-actions"><span class="demo-label">OYNANABİLİR DEMO</span><button id="sound-button" class="icon-button" title="Sesi aç" aria-label="Sesi aç"></button><button id="help-button" class="icon-button" title="Nasıl oynanır?" aria-label="Nasıl oynanır?"></button><button id="settings-button" class="icon-button" title="Ayarlar" aria-label="Ayarlar"></button></div></header>
+<main>
+<div class="intro-row"><div><div class="eyebrow"><span class="live-dot"></span> TEK OYUNCULU MACERA</div><h1>Krallığını koru.</h1><p>Doğru kahraman. Doğru hamle. Güçlü bir savunma.</p></div><button id="training-button" class="training-link"><span class="training-symbol">✦</span><span>Kora’nın talim alanı<small>İsabetini geliştir, güç kazan</small></span><span aria-hidden="true">↗</span></button></div>
+<div class="game-layout">
+<section class="battle-section" aria-label="Savaş alanı">
+<div class="arena-header"><div class="faction"><span class="faction-dot enemy"></span><strong>Kızıl Sancak</strong><span class="faction-description">RAKİP · YAPAY ZEKÂ</span></div><button id="enemy-info-button" class="fair-play" title="Rakibin kahramanlarını ve bekleme sürelerini incele">Rakibi incele ↗</button></div>
+<div id="arena" class="arena"><div id="landscape" class="landscape-wrap"></div><div class="arena-vignette"></div><div class="arena-grain"></div><div class="castle-row enemy-row" id="enemy-castles"></div><div id="round-banner" class="round-banner"></div><div id="incoming-banner" class="incoming-banner" hidden></div><div class="castle-row player-row" id="player-castles"></div><div id="effects" class="effects-layer" aria-hidden="true"></div><div class="arena-hint" id="arena-hint"></div></div>
+<div class="arena-footer"><div class="faction"><span class="faction-dot player"></span><strong>Senin krallığın</strong></div><span id="bonus-label" class="bonus-label"></span></div>
+<div class="battle-story"><span class="story-mark">“</span><p id="battle-flavor">Bir krallığı surları değil, onu savunanlar ayakta tutar.</p><button id="stories-button" class="text-button">Muhafızları tanı <span aria-hidden="true">↗</span></button></div>
+</section>
+<aside class="command-panel" aria-label="Hamlelerin">
+<div class="command-heading"><div><span class="eyebrow" id="phase-eyebrow">SIRA SENDE</span><h2 id="phase-title">Saldırını planla</h2></div><span id="phase-icon" class="phase-icon"></span></div>
+<p id="command-help" class="command-help">Bir muhafız seç, rakibin yan kalesine nişan al.</p>
+<div id="hero-choices" class="hero-choices"></div>
+<button id="fallback-button" class="fallback-button"></button>
+<div id="move-preview" class="move-preview"></div>
+<button id="action-button" class="primary-button action-button"></button>
+<p id="action-note" class="action-note"></p>
+<div class="chronicle"><button id="log-toggle" class="chronicle-heading" aria-expanded="false"><span>SON HAMLELER</span><span class="chronicle-chevron">⌄</span></button><ol id="battle-log"></ol></div>
+</aside>
+</div>
+<footer class="page-footer"><span>Bir hamle düşün. Bir hikâye yaz.</span><span>Kale Muhafızları <span class="footer-divider">/</span> Prototip 01</span></footer>
+</main>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div><div id="live-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+<dialog id="modal" class="modal"><button id="close-modal" class="icon-button close-modal" aria-label="Pencereyi kapat"></button><div id="modal-content"></div></dialog>
+<script type="module" src="app.js"></script>
+</body></html>

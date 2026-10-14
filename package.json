@@ -1,0 +1,8 @@
+{
+  "name": "kale-muhafizlari",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Özgün, bağımlılıksız Türkçe kale düellosu prototipi",
+  "scripts": { "test": "node --test tests/*.test.mjs", "start": "python3 -m http.server 4173 --directory dist" }
+}
